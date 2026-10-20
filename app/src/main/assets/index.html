@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>TV Home Lab</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: #101114;
+    color: #f5f5f5;
+    font-family: Arial, sans-serif;
+  }
+  body { padding: 5vh 5vw; }
+  main { height: 100%; display: flex; flex-direction: column; }
+  h1 { font-size: clamp(28px, 3vw, 48px); margin: 0 0 12px; }
+  #metrics { color: #c4c6ce; font-size: clamp(16px, 1.4vw, 24px); line-height: 1.6; }
+  .sample {
+    width: 280px;
+    height: 160px;
+    margin-top: 32px;
+    border: 3px solid #ffffff;
+    border-radius: 12px;
+    background: #292c34;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+  }
+  footer { margin-top: auto; color: #8f929c; font-size: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>TV Home Lab</h1>
+  <div id="metrics"></div>
+  <div class="sample">Referência<br>280 × 160 CSS px</div>
+  <footer>Teste de escala · TCL · WebView local</footer>
+</main>
+<script>
+function updateMetrics() {
+  document.getElementById('metrics').innerHTML =
+    'Viewport: ' + innerWidth + ' × ' + innerHeight + ' CSS px<br>' +
+    'devicePixelRatio: ' + devicePixelRatio + '<br>' +
+    'screen: ' + screen.width + ' × ' + screen.height + ' CSS px';
+}
+updateMetrics();
+addEventListener('resize', updateMetrics);
+</script>
+</body>
+</html>

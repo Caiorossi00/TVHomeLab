@@ -1,0 +1,18 @@
+# Android e Gradle
+.gradle/
+**/build/
+
+# Configuração local do Android SDK
+local.properties
+
+# Arquivos de IDE
+.idea/
+*.iml
+.vscode/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
