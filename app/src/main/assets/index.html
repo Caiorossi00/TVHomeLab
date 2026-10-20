@@ -257,7 +257,14 @@
       }
 
       function activateApplication() {
-        message.textContent = 'Atalho visual — integração pendente';
+        const application = applications[selectedIndex];
+        const appId = application.dataset.app;
+
+        if (window.Android && typeof window.Android.openApp === 'function') {
+          window.Android.openApp(appId);
+        } else {
+          message.textContent = 'Integração Android indisponível';
+        }
       }
 
       document.addEventListener('keydown', (event) => {
