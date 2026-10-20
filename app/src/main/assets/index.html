@@ -1,55 +1,298 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>TV Home Lab</title>
-<style>
-  * { box-sizing: border-box; }
-  html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    background: #101114;
-    color: #f5f5f5;
-    font-family: Arial, sans-serif;
-  }
-  body { padding: 5vh 5vw; }
-  main { height: 100%; display: flex; flex-direction: column; }
-  h1 { font-size: clamp(28px, 3vw, 48px); margin: 0 0 12px; }
-  #metrics { color: #c4c6ce; font-size: clamp(16px, 1.4vw, 24px); line-height: 1.6; }
-  .sample {
-    width: 280px;
-    height: 160px;
-    margin-top: 32px;
-    border: 3px solid #ffffff;
-    border-radius: 12px;
-    background: #292c34;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 20px;
-  }
-  footer { margin-top: auto; color: #8f929c; font-size: 16px; }
-</style>
-</head>
-<body>
-<main>
-  <h1>TV Home Lab</h1>
-  <div id="metrics"></div>
-  <div class="sample">Referência<br>280 × 160 CSS px</div>
-  <footer>Teste de escala · TCL · WebView local</footer>
-</main>
-<script>
-function updateMetrics() {
-  document.getElementById('metrics').innerHTML =
-    'Viewport: ' + innerWidth + ' × ' + innerHeight + ' CSS px<br>' +
-    'devicePixelRatio: ' + devicePixelRatio + '<br>' +
-    'screen: ' + screen.width + ' × ' + screen.height + ' CSS px';
-}
-updateMetrics();
-addEventListener('resize', updateMetrics);
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Caiorossi.dev</title>
+
+    <style>
+      :root {
+        color-scheme: dark;
+        --background: #101114;
+        --text: #f5f5f7;
+        --text-secondary: #c5c5cc;
+        --overlay: rgba(0, 0, 0, 0.55);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--background);
+        color: var(--text);
+        font-family:
+          'Inter',
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        letter-spacing: -1px;
+      }
+
+      body {
+        position: relative;
+        padding: 6vh 6vw 5vh;
+        background-image: url('backgrounds/home-background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: var(--overlay);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+      }
+
+      .header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .date {
+        margin: 0 0 10px;
+        color: var(--text-secondary);
+        font-size: clamp(14px, 1.5vw, 20px);
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      }
+
+      .clock {
+        margin: 0;
+        font-size: clamp(58px, 8vw, 92px);
+        font-weight: 400;
+        letter-spacing: -4px;
+        line-height: 1.05;
+        text-shadow: 0 3px 12px rgba(0, 0, 0, 0.65);
+      }
+
+      .subtitle {
+        margin-top: 12px;
+        color: var(--text-secondary);
+        font-size: clamp(15px, 1.6vw, 21px);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      }
+
+      .applications {
+        display: flex;
+        flex-direction: row;
+        width: min(100%, 780px);
+        margin-top: 28px;
+        gap: 22px;
+      }
+
+      .app {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: clamp(100px, 18vh, 165px);
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: var(--text);
+        font: inherit;
+        cursor: pointer;
+        transition:
+          transform 140ms ease,
+          filter 140ms ease;
+      }
+
+      .app:focus,
+      .app.selected {
+        outline: none;
+        transform: scale(1.01);
+        filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
+          drop-shadow(0 4px 12px rgba(0, 0, 0, 0.65));
+      }
+
+      .app-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        object-fit: contain;
+        object-position: center;
+        border-radius: 12px;
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: auto;
+        color: var(--text-secondary);
+        font-size: clamp(12px, 1.2vw, 15px);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        font-size: 16px;
+      }
+
+      .message {
+        min-height: 1.3em;
+        text-align: right;
+      }
+
+      @media (max-height: 450px) {
+        body {
+          padding-top: 4vh;
+          padding-bottom: 3vh;
+        }
+
+        .clock {
+          font-size: 58px;
+        }
+
+        .applications {
+          margin-top: 24px;
+        }
+
+        .app {
+          height: 100px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .app {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <header class="header">
+        <p class="date" id="date">Carregando data</p>
+        <h1 class="clock" id="clock">00:00</h1>
+        <div class="subtitle">Interface de testes versão 1.0</div>
+      </header>
+
+      <section class="applications" aria-label="Aplicativos">
+        <button class="app" type="button" data-app="stremio" aria-label="Stremio">
+          <img class="app-image" src="apps/stremio.jpg" alt="" />
+        </button>
+
+        <button class="app" type="button" data-app="youtube" aria-label="YouTube">
+          <img class="app-image" src="apps/youtube.jpg" alt="" />
+        </button>
+
+        <button class="app" type="button" data-app="veloplay" aria-label="VeloPlay TV">
+          <img class="app-image" src="apps/veloplay.png" alt="" />
+        </button>
+      </section>
+
+      <footer class="footer">
+        <span>Caiorossi.dev</span>
+        <span class="message" id="message"> Use as setas para navegar </span>
+      </footer>
+    </main>
+
+    <script>
+      const clock = document.getElementById('clock');
+      const date = document.getElementById('date');
+      const message = document.getElementById('message');
+      const applications = Array.from(document.querySelectorAll('.app'));
+
+      let selectedIndex = 0;
+
+      function updateClock() {
+        const now = new Date();
+
+        clock.textContent = new Intl.DateTimeFormat('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }).format(now);
+
+        date.textContent = new Intl.DateTimeFormat('pt-BR', {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long',
+        }).format(now);
+      }
+
+      function selectApplication(index) {
+        selectedIndex = (index + applications.length) % applications.length;
+
+        applications.forEach((application, i) => {
+          application.classList.toggle('selected', i === selectedIndex);
+        });
+
+        applications[selectedIndex].focus({
+          preventScroll: true,
+        });
+
+        message.textContent = applications[selectedIndex].getAttribute('aria-label');
+      }
+
+      function activateApplication() {
+        message.textContent = 'Atalho visual — integração pendente';
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+          event.preventDefault();
+          selectApplication(selectedIndex + 1);
+        } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+          event.preventDefault();
+          selectApplication(selectedIndex - 1);
+        } else if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          activateApplication();
+        }
+      });
+
+      applications.forEach((application, index) => {
+        application.addEventListener('focus', () => {
+          selectedIndex = index;
+
+          applications.forEach((item, itemIndex) => {
+            item.classList.toggle('selected', itemIndex === index);
+          });
+
+          message.textContent = application.getAttribute('aria-label');
+        });
+
+        application.addEventListener('click', () => {
+          selectApplication(index);
+          activateApplication();
+        });
+      });
+
+      updateClock();
+      setInterval(updateClock, 1000);
+      selectApplication(0);
+    </script>
+  </body>
 </html>
