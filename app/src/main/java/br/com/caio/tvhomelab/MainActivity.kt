@@ -4,6 +4,7 @@ package br.com.caio.tvhomelab
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
@@ -65,6 +66,22 @@ class MainActivity : Activity() {
                     Toast.makeText(
                         this@MainActivity,
                         "Não foi possível abrir o aplicativo",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+        @JavascriptInterface
+        fun openSettings() {
+            runOnUiThread {
+                try {
+                    val intent = Intent(Settings.ACTION_SETTINGS)
+                    startActivity(intent)
+                } catch (_: Exception) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Não foi possível abrir as configurações",
                         Toast.LENGTH_LONG
                     ).show()
                 }

@@ -1,16 +1,26 @@
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
-        android:label="TV Home Lab"
+        android:label="Caiorossi.dev"
         android:usesCleartextTraffic="false">
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter android:priority="10">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
     </application>
 </manifest>
