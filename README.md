@@ -258,34 +258,17 @@ Os arquivos HTML, CSS, JavaScript e imagens são empacotados no APK. Isso elimin
 
 ## Estado atual
 
-| Item                                       | Situação                 |
-| ------------------------------------------ | ------------------------ |
-| Aplicativo Android e WebView               | Implementados            |
-| Interface HTML local                       | Implementada             |
-| Atalhos de aplicativos                     | Implementados            |
-| Navegação por controle remoto              | Implementada             |
-| Ponte JavaScript–Kotlin                    | Implementada             |
-| Botão de configurações                     | Implementação adicionada |
-| Inicialização da home após reinicialização | Implementado             |
+| Item                                       | Situação      |
+| ------------------------------------------ | ------------- |
+| Aplicativo Android e WebView               | Implementados |
+| Interface HTML local                       | Implementada  |
+| Atalhos de aplicativos                     | Implementados |
+| Navegação por controle remoto              | Implementada  |
+| Ponte JavaScript–Kotlin                    | Implementada  |
+| Botão de configurações                     | Implementado  |
+| Inicialização da home após reinicialização | Implementado  |
 
 A existência do método `openSettings()` no Kotlin foi confirmada no arquivo local, mas isso não substitui o teste de abertura das configurações no dispositivo.
-
-## Próximos passos
-
-1. Compilar e instalar a versão atual.
-2. Confirmar que o botão de configurações aparece corretamente.
-3. Testar o foco e a ativação com o controle remoto.
-4. Verificar o destino aberto pelo `Settings.ACTION_SETTINGS`.
-5. Validar a navegação entre todos os elementos da home.
-6. Continuar os refinamentos visuais sem alterar a configuração funcional do launcher.
-
-## Limitações e observações
-
-- A interface depende da compatibilidade e do comportamento do WebView fornecido pelo sistema.
-- A navegação por controle remoto precisa considerar o foco e os eventos de teclado enviados pelo Android.
-- A disponibilidade dos atalhos depende de os aplicativos estarem instalados e oferecerem uma Activity de inicialização.
-- O botão de configurações solicita as configurações genéricas do Android; o destino exato depende do firmware.
-- A configuração atual do launcher foi validada em um dispositivo específico e pode não se reproduzir da mesma forma em outros modelos ou versões de firmware.
 
 ---
 
