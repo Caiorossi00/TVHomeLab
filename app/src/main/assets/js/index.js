@@ -7,6 +7,59 @@ const controls = [...applications, settingsButton];
 
 let selectedIndex = 0;
 
+// Mock JSON com os jogos de futebol do dia
+const mockMatches = [
+  {
+    status: 'LIVE',
+    statusText: "AO VIVO • 72'",
+    homeTeam: 'Flamengo',
+    homeScore: 2,
+    awayTeam: 'Palmeiras',
+    awayScore: 1,
+  },
+  {
+    status: 'SCHEDULED',
+    statusText: 'HOJE • 21:30',
+    homeTeam: 'Grêmio',
+    homeScore: '-',
+    awayTeam: 'Internacional',
+    awayScore: '-',
+  },
+  {
+    status: 'FINISHED',
+    statusText: 'FINALIZADO',
+    homeTeam: 'Real Madrid',
+    homeScore: 3,
+    awayTeam: 'Barcelona',
+    awayScore: 1,
+  },
+];
+
+function renderMatches() {
+  const container = document.getElementById('matchesList');
+  container.innerHTML = '';
+
+  mockMatches.forEach((match) => {
+    const isLive = match.status === 'LIVE';
+    const cardHTML = `
+      <div class="match-card ${isLive ? 'live' : ''}">
+        <div class="match-status">${match.statusText}</div>
+        <div class="teams">
+          <div class="team">
+            <span class="team-name">${match.homeTeam}</span>
+            <span class="score">${match.homeScore}</span>
+          </div>
+          <div class="team">
+            <span class="team-name">${match.awayTeam}</span>
+            <span class="score">${match.awayScore}</span>
+          </div>
+        </div>
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', cardHTML);
+  });
+}
+
 function updateClock() {
   const now = new Date();
 
@@ -87,6 +140,8 @@ controls.forEach((control, index) => {
   });
 });
 
+// Inicializações
 updateClock();
 setInterval(updateClock, 1000);
+renderMatches();
 selectControl(0);

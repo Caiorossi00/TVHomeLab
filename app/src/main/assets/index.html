@@ -12,6 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/soccerCard.css" />
 
     <title>Caiorossi.dev</title>
   </head>
@@ -42,11 +43,18 @@
         <h1 class="clock" id="clock">00:00</h1>
       </header>
 
-      <section class="applications" aria-label="Aplicativos">
-        <button class="app" type="button" data-app="veloplay">TV</button>
-        <button class="app" type="button" data-app="youtube">Youtube</button>
-        <button class="app" type="button" data-app="stremio">Stremio</button>
-      </section>
+      <div class="content-body">
+        <section class="applications" aria-label="Aplicativos">
+          <button class="app" type="button" data-app="veloplay" aria-label="TV">TV</button>
+          <button class="app" type="button" data-app="youtube" aria-label="Youtube">Youtube</button>
+          <button class="app" type="button" data-app="stremio" aria-label="Stremio">Stremio</button>
+        </section>
+
+        <section class="matches-section" aria-label="Jogos de Hoje">
+          <h2 class="section-title">Jogos de Hoje</h2>
+          <div class="matches-list" id="matchesList"></div>
+        </section>
+      </div>
 
       <footer class="footer">
         <span>Caiorossi.dev</span>

@@ -1,0 +1,76 @@
+.matches-section {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: 20px;
+  margin-top: -30px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+.matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Card individual do jogo */
+.match-card {
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.match-card.live {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.match-status {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.match-card.live .match-status {
+  color: #ef4444;
+}
+
+.teams {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.team {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.team-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.score {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
