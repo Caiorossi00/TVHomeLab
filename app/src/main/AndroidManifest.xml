@@ -1,9 +1,11 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:label="Caiorossi.dev"
-        android:usesCleartextTraffic="false">
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".MainActivity"

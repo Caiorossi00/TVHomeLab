@@ -3,42 +3,120 @@ const date = document.getElementById('date');
 const message = document.getElementById('message');
 const applications = Array.from(document.querySelectorAll('.app'));
 const settingsButton = document.getElementById('settingsButton');
+
+const matchesTrack = document.getElementById('matchesList');
+const matchesPrimary = document.getElementById('matchesPrimary');
+const matchesDuplicate = document.getElementById('matchesDuplicate');
+
 const controls = [...applications, settingsButton];
+
+const TICKER_PX_PER_SECOND = 30;
+const TICKER_MIN_SECONDS = 20;
+const MATCHES_REFRESH_MS = 60 * 1000;
 
 let selectedIndex = 0;
 
+function createElement(tag, className, text) {
+  const element = document.createElement(tag);
+
+  if (className) {
+    element.className = className;
+  }
+
+  if (text !== undefined && text !== null) {
+    element.textContent = text;
+  }
+
+  return element;
+}
+
+function createMatchItem(match) {
+  const status = match.status || 'SCHEDULED';
+  const isLive = status === 'LIVE';
+  const isFinished = status === 'FINISHED';
+  const isScheduled = status === 'SCHEDULED';
+
+  const item = createElement('div', `ticker-item ${status.toLowerCase()}`);
+
+  const statusElement = createElement(
+    'span',
+    `ticker-status${isLive ? ' live' : ''}`,
+    match.statusText || status,
+  );
+
+  const homeTeam = createElement('span', 'ticker-team', match.homeTeam);
+
+  const awayTeam = createElement('span', 'ticker-team', match.awayTeam);
+
+  item.appendChild(statusElement);
+  item.appendChild(homeTeam);
+
+  if (isScheduled) {
+    item.appendChild(createElement('span', 'ticker-versus', 'X'));
+  } else {
+    item.appendChild(
+      createElement('span', 'ticker-score', `${match.homeScore ?? 0} - ${match.awayScore ?? 0}`),
+    );
+  }
+
+  item.appendChild(awayTeam);
+
+  if (isFinished) {
+    item.appendChild(createElement('span', 'ticker-versus', 'FT'));
+  }
+
+  return item;
+}
+
+function updateTickerSpeed() {
+  const groupWidth = matchesPrimary.getBoundingClientRect().width;
+
+  if (!groupWidth) {
+    return;
+  }
+
+  const seconds = Math.max(groupWidth / TICKER_PX_PER_SECOND, TICKER_MIN_SECONDS);
+
+  matchesTrack.style.animationDuration = `${seconds}s`;
+}
+
 function renderMatches(matches) {
-  const container = document.getElementById('matchesList');
-  container.innerHTML = '';
+  matchesPrimary.replaceChildren();
+  matchesDuplicate.replaceChildren();
+
+  if (matches.length === 0) {
+    showMatchesError('Nenhuma partida hoje.');
+    return;
+  }
 
   matches.forEach((match) => {
-    const isLive = match.status === 'LIVE';
-    const cardHTML = `
-      <div class="match-card ${isLive ? 'live' : ''}">
-        <div class="match-status">${match.statusText}</div>
-        <div class="teams">
-          <div class="team">
-            <span class="team-name">${match.homeTeam}</span>
-            <span class="score">${match.homeScore ?? '-'}</span>
-          </div>
-          <div class="team">
-            <span class="team-name">${match.awayTeam}</span>
-            <span class="score">${match.awayScore ?? '-'}</span>
-          </div>
-        </div>
-      </div>
-    `;
-
-    container.insertAdjacentHTML('beforeend', cardHTML);
+    matchesPrimary.appendChild(createMatchItem(match));
+    matchesDuplicate.appendChild(createMatchItem(match));
   });
+
+  matchesDuplicate.setAttribute('aria-hidden', 'true');
+  matchesPrimary.removeAttribute('aria-hidden');
+
+  matchesTrack.classList.remove('is-static');
+
+  requestAnimationFrame(updateTickerSpeed);
+}
+
+function showMatchesError(text) {
+  matchesPrimary.replaceChildren();
+  matchesDuplicate.replaceChildren();
+
+  matchesPrimary.appendChild(createElement('div', 'ticker-error', text));
+
+  matchesTrack.classList.add('is-static');
+  matchesTrack.style.animationDuration = '';
 }
 
 async function loadMatches() {
-  const container = document.getElementById('matchesList');
   const apiBaseUrl = window.TVHomeLabConfig?.apiBaseUrl;
 
   if (!apiBaseUrl) {
-    container.textContent = 'Backend não configurado.';
+    showMatchesError('Backend não configurado.');
     return;
   }
 
@@ -57,7 +135,7 @@ async function loadMatches() {
 
     renderMatches(result.data);
   } catch (error) {
-    container.textContent = 'Não foi possível carregar as partidas.';
+    showMatchesError('Não foi possível carregar as partidas.');
     console.error('Erro ao carregar partidas:', error);
   }
 }
@@ -142,7 +220,10 @@ controls.forEach((control, index) => {
   });
 });
 
+window.addEventListener('resize', updateTickerSpeed);
+
 updateClock();
 setInterval(updateClock, 1000);
 loadMatches();
+setInterval(loadMatches, MATCHES_REFRESH_MS);
 selectControl(0);

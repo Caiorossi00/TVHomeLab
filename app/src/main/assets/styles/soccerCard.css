@@ -1,76 +1,122 @@
 .matches-section {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-right: 20px;
-  margin-top: -30px;
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+  margin-top: auto;
+  overflow: hidden;
 }
 
-.section-title {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-secondary);
-  opacity: 0.8;
+.ticker-viewport {
+  width: 100%;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 13, 17, 0.88);
 }
 
-.matches-list {
+.ticker-track {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  width: max-content;
+  min-width: max-content;
+  will-change: transform;
+  animation: tickerScroll 180s linear infinite;
 }
 
-/* Card individual do jogo */
-.match-card {
-  padding: 8px 16px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(10px);
+.ticker-track.is-static {
+  animation: none;
+}
+
+.ticker-group {
   display: flex;
-  flex-direction: column;
+  flex: 0 0 auto;
+  align-items: center;
+  width: max-content;
+  min-width: 100vw;
+}
+
+.ticker-item {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 26px;
+  border-right: 1px solid rgba(255, 255, 255, 0.13);
+  white-space: nowrap;
+}
+
+.ticker-status {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
   gap: 6px;
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
 }
 
-.match-card.live {
-  border-color: rgba(239, 68, 68, 0.4);
-  background: rgba(239, 68, 68, 0.06);
+.ticker-status.live {
+  color: #ff5a5a;
 }
 
-.match-status {
+.ticker-status.live::before {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #ef4444;
+  content: '';
+}
+
+.ticker-team {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ticker-score {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.ticker-versus {
+  color: var(--text-secondary);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--text-secondary);
 }
 
-.match-card.live .match-status {
-  color: #ef4444;
+.ticker-item.finished .ticker-status {
+  color: #9ca3af;
 }
 
-.teams {
+.ticker-item.scheduled .ticker-status {
+  color: #93c5fd;
+}
+
+.ticker-error {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.team {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  min-height: 58px;
+  padding: 10px 24px;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
-.team-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
+@keyframes tickerScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-.score {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
+@media (prefers-reduced-motion: reduce) {
+  .ticker-status.live::before {
+    animation: none;
+  }
 }

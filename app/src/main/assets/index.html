@@ -19,48 +19,65 @@
 
   <body>
     <main>
-      <button class="settings-button" id="settingsButton" type="button" aria-label="Configurações">
-        <svg
-          viewBox="0 0 24 24"
-          width="28"
-          height="28"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.7"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <circle cx="12" cy="12" r="3"></circle>
-          <path
-            d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a1.7 1.7 0 1 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2a1.7 1.7 0 1 1-3.4 0v-.2a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a1.7 1.7 0 1 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H4.2a1.7 1.7 0 1 1 0-3.4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a1.7 1.7 0 1 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4.2a1.7 1.7 0 1 1 3.4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a1.7 1.7 0 1 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2a1.7 1.7 0 1 1 0 3.4h-.2a1.7 1.7 0 0 0-1.4.6Z"
-          ></path>
-        </svg>
-      </button>
+      <div id="main-container">
+        <header class="header">
+          <div class="top">
+            <p class="date" id="date">Carregando data</p>
+            <button
+              class="settings-button"
+              id="settingsButton"
+              type="button"
+              aria-label="Configurações"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="28"
+                height="28"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="3"></circle>
+                <path
+                  d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a1.7 1.7 0 1 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2a1.7 1.7 0 1 1-3.4 0v-.2a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a1.7 1.7 0 1 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H4.2a1.7 1.7 0 1 1 0-3.4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a1.7 1.7 0 1 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4.2a1.7 1.7 0 1 1 3.4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a1.7 1.7 0 1 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2a1.7 1.7 0 1 1 0 3.4h-.2a1.7 1.7 0 0 0-1.4.6Z"
+                ></path>
+              </svg>
+            </button>
+          </div>
 
-      <header class="header">
-        <p class="date" id="date">Carregando data</p>
-        <h1 class="clock" id="clock">00:00</h1>
-      </header>
+          <h1 class="clock" id="clock">00:00</h1>
+        </header>
 
-      <div class="content-body">
-        <section class="applications" aria-label="Aplicativos">
-          <button class="app" type="button" data-app="veloplay" aria-label="TV">TV</button>
-          <button class="app" type="button" data-app="youtube" aria-label="Youtube">Youtube</button>
-          <button class="app" type="button" data-app="stremio" aria-label="Stremio">Stremio</button>
-        </section>
+        <div class="content-body">
+          <section class="applications" aria-label="Aplicativos">
+            <button class="app" type="button" data-app="veloplay" aria-label="TV">TV</button>
+            <button class="app" type="button" data-app="youtube" aria-label="Youtube">
+              Youtube
+            </button>
+            <button class="app" type="button" data-app="stremio" aria-label="Stremio">
+              Stremio
+            </button>
+          </section>
+        </div>
 
-        <section class="matches-section" aria-label="Jogos de Hoje">
-          <h2 class="section-title">Jogos de Hoje</h2>
-          <div class="matches-list" id="matchesList"></div>
-        </section>
+        <div class="credits">
+          <span class="message" id="message"> Use as setas para navegar </span>
+        </div>
       </div>
 
-      <footer class="footer">
-        <span>Caiorossi.dev</span>
-        <span class="message" id="message">Use as setas para navegar</span>
-      </footer>
+      <section class="matches-section" aria-label="Resultados esportivos">
+        <div class="ticker-viewport" aria-label="Ticker de partidas">
+          <div class="ticker-track" id="matchesList">
+            <div class="ticker-group" id="matchesPrimary"></div>
+            <div class="ticker-group" id="matchesDuplicate" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
     </main>
+
     <script src="./config.js"></script>
     <script src="./js/index.js"></script>
   </body>
