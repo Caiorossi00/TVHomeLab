@@ -6,6 +6,7 @@ O TVHomeLab é um projeto experimental que substitui a interface visual padrão 
 
 A interface é renderizada localmente dentro de um aplicativo Android nativo. Não depende de um servidor web ou de uma conexão com a internet para exibir a home.
 
+![UI](app/src/main/assets/images/UI.png)
 ## Objetivos
 
 - Criar uma interface inicial personalizada para a TV.
