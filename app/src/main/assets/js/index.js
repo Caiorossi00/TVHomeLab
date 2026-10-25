@@ -7,39 +7,11 @@ const controls = [...applications, settingsButton];
 
 let selectedIndex = 0;
 
-// Mock JSON com os jogos de futebol do dia
-const mockMatches = [
-  {
-    status: 'LIVE',
-    statusText: "AO VIVO • 72'",
-    homeTeam: 'Flamengo',
-    homeScore: 2,
-    awayTeam: 'Palmeiras',
-    awayScore: 1,
-  },
-  {
-    status: 'SCHEDULED',
-    statusText: 'HOJE • 21:30',
-    homeTeam: 'Grêmio',
-    homeScore: '-',
-    awayTeam: 'Internacional',
-    awayScore: '-',
-  },
-  {
-    status: 'FINISHED',
-    statusText: 'FINALIZADO',
-    homeTeam: 'Real Madrid',
-    homeScore: 3,
-    awayTeam: 'Barcelona',
-    awayScore: 1,
-  },
-];
-
-function renderMatches() {
+function renderMatches(matches) {
   const container = document.getElementById('matchesList');
   container.innerHTML = '';
 
-  mockMatches.forEach((match) => {
+  matches.forEach((match) => {
     const isLive = match.status === 'LIVE';
     const cardHTML = `
       <div class="match-card ${isLive ? 'live' : ''}">
@@ -47,17 +19,47 @@ function renderMatches() {
         <div class="teams">
           <div class="team">
             <span class="team-name">${match.homeTeam}</span>
-            <span class="score">${match.homeScore}</span>
+            <span class="score">${match.homeScore ?? '-'}</span>
           </div>
           <div class="team">
             <span class="team-name">${match.awayTeam}</span>
-            <span class="score">${match.awayScore}</span>
+            <span class="score">${match.awayScore ?? '-'}</span>
           </div>
         </div>
       </div>
     `;
+
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
+}
+
+async function loadMatches() {
+  const container = document.getElementById('matchesList');
+  const apiBaseUrl = window.TVHomeLabConfig?.apiBaseUrl;
+
+  if (!apiBaseUrl) {
+    container.textContent = 'Backend não configurado.';
+    return;
+  }
+
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/matches/today`);
+
+    if (!response.ok) {
+      throw new Error('Falha ao consultar partidas');
+    }
+
+    const result = await response.json();
+
+    if (!result.success || !Array.isArray(result.data)) {
+      throw new Error('Resposta inválida da API');
+    }
+
+    renderMatches(result.data);
+  } catch (error) {
+    container.textContent = 'Não foi possível carregar as partidas.';
+    console.error('Erro ao carregar partidas:', error);
+  }
 }
 
 function updateClock() {
@@ -140,8 +142,7 @@ controls.forEach((control, index) => {
   });
 });
 
-// Inicializações
 updateClock();
 setInterval(updateClock, 1000);
-renderMatches();
+loadMatches();
 selectControl(0);
